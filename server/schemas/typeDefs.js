@@ -7,20 +7,16 @@ const typeDefs = gql`
         me: User
     }
     type Mutation {
-        login (email: String!, password: String!) Auth 
-            //Accepts an email and password as parameters; returns an Auth type.
+        login (email: String!, password: String!): Auth 
         addUser (username: String!, email: String!, password: String!): Auth
-            //Accepts a username, email, and password as parameters; returns an Auth type.
-        saveBook: (authors: [String!], description: String!, title: String!, bookId: String!, image: String!, link: String!): User
-            //Accepts a book author's array, description, title, bookId, image, and link as parameters; returns a User type. (Look into creating what's known as an input type to handle all of these parameters!)
+        saveBook (authors: [String!], description: String!, title: String!, bookId: String!, image: String!, link: String!): User
         removeBook (bookId: String!): User
-            //Accepts a book's bookId as a parameter; returns a User type.
     }
     type User {
         _id: ID
         username: String
         email: String
-        bookcount:
+        bookcount: Int
         saveBooks: [Book]
     }
     type Book {
@@ -32,7 +28,7 @@ const typeDefs = gql`
         title: String
     }
     type Auth {
-        token:
+        token: String
         user: User
     }
 `;

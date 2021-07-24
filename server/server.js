@@ -5,6 +5,7 @@ const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');
 const { authMiddleware } = require('./utils/auth');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -19,12 +20,12 @@ server.applyMiddleware({ app });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use(routes);
+
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
-
-app.use(routes);
 
 db.once('open', () => {
   app.listen(PORT, () => {
